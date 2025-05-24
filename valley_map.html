@@ -982,6 +982,25 @@
                 closeButton.setAttribute("class", "closeButtonFunction");
                 closeButton.addEventListener("click", destroyLivingValleyPopUp);
                 livingValleySVG.appendChild(closeButton);
+				
+				// Add new tab button
+                let newTabButtonText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                newTabButtonText.setAttribute("x", livingValleySVGWidth - 75);
+                newTabButtonText.setAttribute("y", 25);
+                newTabButtonText.setAttribute("class", "closeButtonText");
+                newTabButtonText.setAttribute("font-size", 36);
+                newTabButtonText.textContent = "+";
+                livingValleySVG.appendChild(newTabButtonText);
+                // Then the new tab button function
+                let newTabButton = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                newTabButton.setAttribute("width", 48);
+                newTabButton.setAttribute("height", 48);
+                newTabButton.setAttribute("x", livingValleySVGWidth - 98);
+                newTabButton.setAttribute("y", 1);
+                newTabButton.setAttribute("rx", 18);
+                newTabButton.setAttribute("ry", 18);
+                newTabButton.setAttribute("class", "closeButtonFunction");
+                livingValleySVG.appendChild(newTabButton);
 
                 let iFrameContainer = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
 
@@ -997,6 +1016,9 @@
                 livingValleyFrame.src = url;
                 livingValleyFrame.width ="100%";
                 livingValleyFrame.height ="100%";
+
+				// Add target for new tab button
+				newTabButton.addEventListener("click", () => { window.open(url, "_blank") });
 
                 iFrameContainer.appendChild(livingValleyFrame);
                 svgElem.appendChild(iFrameContainer);
