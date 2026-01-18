@@ -1,13 +1,15 @@
 <script lang="ts">
 
     interface Props {
+        width: number,
+        height: number,
         x: number,
         y: number,
         scaleFactor: number,
         mapImage: string,
     }
 
-    let { x, y, scaleFactor, mapImage }: Props = $props();
+    let { width, height, x, y, scaleFactor, mapImage }: Props = $props();
 
 
     let svgElem = $state<SVGElement>();
@@ -126,7 +128,16 @@
             </filter>
         </defs>
 
-        <image bind:this={map} id="mapImage" width="6000" height="7800" {x} {y} href={mapImage} transform={`scale(${scaleFactor})`} />
+        <image 
+            bind:this={map}
+            id="mapImage" 
+            {width} 
+            {height}
+            {x}
+            {y} 
+            href={mapImage} 
+            transform={`scale(${scaleFactor})`} 
+        />
     </svg>
 </div>
 

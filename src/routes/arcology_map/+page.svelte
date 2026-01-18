@@ -5,4 +5,11 @@
 </script>
 
 
-<InteractiveMap x={-1720} y={-900} scaleFactor={0.5} mapImage={ArcologyMapImage} />
+<InteractiveMap 
+    width={6000}
+    height={7800}
+    x={-1720} 
+    y={-900} 
+    scaleFactor={0.5} 
+    mapImage={ArcologyMapImage} 
+/>
