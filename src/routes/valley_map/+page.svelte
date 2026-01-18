@@ -5,4 +5,4 @@
 </script>
 
 
-<InteractiveMap x={-1310} y={-1445} mapImage={ValleyMapImage} />
+<InteractiveMap x={-1310} y={-1445} scaleFactor={0.4} mapImage={ValleyMapImage} />
