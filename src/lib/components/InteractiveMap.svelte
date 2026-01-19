@@ -18,8 +18,12 @@
 
 
     let isDragging = $state(false);
-    function onmousedown() {
+    let startX = $state(0);
+    let startY = $state(0);
+    function onmousedown(event: MouseEvent) {
         isDragging = true;
+        startX = event.clientX;
+        startY = event.clientY;
     }
 
     function onmousemove(event: MouseEvent) {
@@ -44,8 +48,8 @@
         let cursorX = event.clientX;
         let cursorY = event.clientY;
 
-        let deltaX = Math.round((cursorX - x) / scaleFactor);
-        let deltaY = Math.round((cursorY - y) / scaleFactor);
+        let deltaX = Math.round((cursorX - startX) / scaleFactor);
+        let deltaY = Math.round((cursorY - startY) / scaleFactor);
 
         // Check if movement would be out of bounds
         if ((x + deltaX > mapOriginXMax) || 
@@ -56,8 +60,11 @@
         }
 
 
-        x = x + deltaX;
-        y = y + deltaY;
+        x += deltaX;
+        y += deltaY;
+
+        startX = cursorX;
+        startY = cursorY;
     }
 
     function onmouseup() {
@@ -81,8 +88,8 @@
 
         if (scaleFactor > minimumScaleFactor) {
             let scaleDelta = 0.1;
-            let deltaX = (0.5 * svgElem.clientWidth) * (scaleDelta / (scaleFactor + scaleDelta)) * (1.0 / scaleFactor);
-            let deltaY = (0.5 * svgElem.clientHeight) * (scaleDelta/ (scaleFactor + scaleDelta)) * (1.0 / scaleFactor);
+            let deltaX = (0.5 * svgElem.clientWidth) * (scaleDelta / (scaleFactor - scaleDelta)) * (1.0 / scaleFactor);
+            let deltaY = (0.5 * svgElem.clientHeight) * (scaleDelta/ (scaleFactor - scaleDelta)) * (1.0 / scaleFactor);
             x = x + deltaX;
             y = y + deltaY;
             scaleFactor -= scaleDelta;
