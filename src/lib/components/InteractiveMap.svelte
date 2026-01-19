@@ -31,6 +31,7 @@
         if (!svgElem) return;
 
         // Define limits for dragging
+        // TODO: parameterize the bounds
         const topBound = 1400;
         const leftBound = 1400;
         const rightBound = 4580;
@@ -115,6 +116,7 @@
 </script>
 
 <div id="mapDiv">
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
     <svg 
         bind:this={svgElem} 
         xmlns="http://www.w3.org/2000/svg" 
