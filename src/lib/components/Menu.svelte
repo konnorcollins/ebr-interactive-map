@@ -35,6 +35,10 @@
 
         display: flex;
         flex-direction: column;
+
+        border-radius: 2px;
+        border-color: rgb(11, 40, 30);
+        background-color: rgb(250, 250, 226);
     }
 
     .links {

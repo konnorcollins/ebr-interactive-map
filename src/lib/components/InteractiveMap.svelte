@@ -1,5 +1,7 @@
 <script lang="ts">
 
+    import { locationData } from "$lib/locations";
+
     interface Props {
         width: number,
         height: number,
@@ -13,7 +15,6 @@
 
 
     let svgElem = $state<SVGElement>();
-    let map = $state<SVGImageElement>();
 
 
 
@@ -82,7 +83,7 @@
     }
 
     function zoomOut() {
-        if (!map || !svgElem) return;
+        if (!svgElem) return;
 
         // TODO: Change this from a hard-coded width to derived from something
         const minimumScaleFactor = Math.ceil((svgElem.clientWidth / 3310) * 10.0) / 10.0;
@@ -96,6 +97,7 @@
             scaleFactor -= scaleDelta;
         }
     }
+
     function zoomIn() {
         if (!svgElem) return;
 
@@ -138,7 +140,6 @@
         </defs>
 
         <image 
-            bind:this={map}
             id="mapImage" 
             {width} 
             {height}
@@ -147,6 +148,36 @@
             href={mapImage} 
             transform={`scale(${scaleFactor})`} 
         />
+
+        {#each locationData as location (location.name)}
+            {#if location.isPivotal}
+                <circle
+                    r={Math.round(65 * scaleFactor)}
+                    cx={Math.round((location.x - (-x)) * scaleFactor)}
+                    cy={Math.round((location.y - (-y)) * scaleFactor)}
+
+                    class="locationButton circle"
+
+                    data-x={location.x} 
+                    data-y={location.y}
+                />
+            {:else}
+                <rect
+                    width={Math.round(111 * scaleFactor)}
+                    height={Math.round(111 * scaleFactor)}
+                    x={Math.round((location.x - (-x)) * scaleFactor)}
+                    y={(location.y - (-y) - Math.round(111 * Math.SQRT2 / 2)) * scaleFactor}
+                    rx={9}
+                    ry={9}
+                    transform={`rotate(${45} ${Math.round((location.x - (-x)) * scaleFactor)} ${(location.y - (-y) - Math.round(111 * Math.SQRT2 / 2)) * scaleFactor})`}
+                    class="locationButton square"
+                    data-x={location.x} 
+                    data-y={location.y}
+                    
+                />
+            {/if}
+
+        {/each}
     </svg>
 </div>
 

@@ -1,4 +1,4 @@
-var locationData = [
+export const locationData = [
     {
         "name"       : "Lone Tree Station",
         "url"        : "lone_tree_station",
