@@ -5,8 +5,8 @@
     let showMenu = $state(true);
 </script>
 
-{#if showMenu}
-    <div id="menu">
+<div id="menu">
+    {#if showMenu} 
         <h3>Map Select</h3>
         <div class="links">
             <a href="/valley_map">The Valley</a>
@@ -19,8 +19,12 @@
             <p>Under construction...</p>
         </div>
         <button onclick={() => {showMenu = false}}>Hide</button>
-    </div>
-{/if}
+    {:else}
+        <!-- TODO: Create hamburger to re-open the menu -->
+        <button onclick={() => {showMenu = true}}>Show</button>
+    {/if}
+</div>
+
 
 <style>
     #menu {

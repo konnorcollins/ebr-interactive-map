@@ -1,6 +1,6 @@
 <script lang="ts">
 	import favicon from '$lib/assets/favicon.svg';
-  import Menu from '$lib/components/Menu.svelte';
+  	import Menu from '$lib/components/Menu.svelte';
 	import "../styles.css";
 
 	let { children } = $props();
