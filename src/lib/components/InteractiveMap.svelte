@@ -1,6 +1,7 @@
 <script lang="ts">
 
     import { locationData } from "$lib/locations";
+    import { getShowLocationNumbers } from "$lib/options.svelte";
 
     interface Props {
         width: number,
@@ -16,11 +17,10 @@
 
     let svgElem = $state<SVGElement>();
 
-
-
     let isDragging = $state(false);
     let startX = $state(0);
     let startY = $state(0);
+
     function onmousedown(event: MouseEvent) {
         isDragging = true;
         startX = event.clientX;
@@ -28,11 +28,53 @@
     }
 
     function onmousemove(event: MouseEvent) {
+        if (!isDragging) return;
 
+        event.preventDefault()
+
+        let cursorX = event.clientX;
+        let cursorY = event.clientY;
+
+        drag(cursorX, cursorY);
+    }
+
+    function onmouseup() {
+        isDragging = false;
+    }
+
+    function onmouseleave() {
+        isDragging = false;
+    }
+
+    function ontouchstart() {
+        isDragging = true;
+    }
+
+    function ontouchmove(event: TouchEvent) {
+        if (!isDragging) return;
+
+        event.preventDefault()
+
+        let cursorX = event.touches[0].clientX;
+        let cursorY = event.touches[0].clientY;
+
+        drag(cursorX, cursorY);
+    }
+
+    function ontouchend() {
+        isDragging = false;
+    }
+
+    function ontouchcancel() {
+        isDragging = false;
+    }
+
+    function drag(cursorX: number, cursorY: number) {
         if (!svgElem) return;
 
         // Define limits for dragging
         // TODO: parameterize the bounds
+
         const topBound = 1400;
         const leftBound = 1400;
         const rightBound = 4580;
@@ -41,14 +83,6 @@
         const mapOriginXMax = (svgElem.clientWidth - (leftBound * scaleFactor)) / scaleFactor;
         const mapOriginYMin = (-1 * bottomBound * scaleFactor) / scaleFactor;
         const mapOriginYMax = (svgElem.clientHeight - (topBound * scaleFactor)) / scaleFactor;
-
-
-        if (!isDragging) return;
-
-        event.preventDefault()
-
-        let cursorX = event.clientX;
-        let cursorY = event.clientY;
 
         let deltaX = Math.round((cursorX - startX) / scaleFactor);
         let deltaY = Math.round((cursorY - startY) / scaleFactor);
@@ -67,14 +101,6 @@
 
         startX = cursorX;
         startY = cursorY;
-    }
-
-    function onmouseup() {
-        isDragging = false;
-    }
-
-    function onmouseleave() {
-        isDragging = false;
     }
 
     function onwheel(event: WheelEvent) {
@@ -129,6 +155,11 @@
         {onmouseup}
         {onmouseleave}
 
+        {ontouchstart}
+        {ontouchmove}
+        {ontouchend}
+        {ontouchcancel}
+
         {onwheel}
 
         >
@@ -171,6 +202,7 @@
                     ry={9}
                     transform={`rotate(${45} ${Math.round((location.x - (-x)) * scaleFactor)} ${(location.y - (-y) - Math.round(111 * Math.SQRT2 / 2)) * scaleFactor})`}
                     class="locationButton square"
+                    class:glow={() => getShowLocationNumbers()}
                     data-x={location.x} 
                     data-y={location.y}
                     
@@ -185,5 +217,10 @@
     svg {
         width: 100%;
         height: 100%;
+    }
+
+    svg > image {
+        /* Removes the ghost image when dragging the map */
+        user-select: none;
     }
 </style>
