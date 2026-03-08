@@ -12,4 +12,5 @@
     y={-1445} 
     scaleFactor={0.4} 
     mapImage={ValleyMapImage} 
+    locationSet="valleyBase"
 />

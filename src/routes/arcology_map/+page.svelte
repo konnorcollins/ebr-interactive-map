@@ -11,5 +11,6 @@
     x={-1720} 
     y={-900} 
     scaleFactor={0.5} 
-    mapImage={ArcologyMapImage} 
+    mapImage={ArcologyMapImage}
+    locationSet="legacyArcology"
 />

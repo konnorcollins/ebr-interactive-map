@@ -3,6 +3,7 @@
     import { locationData } from "$lib/locations";
     import { getShowLocationNumbers } from "$lib/options.svelte";
 
+
     interface Props {
         width: number,
         height: number,
@@ -10,9 +11,10 @@
         y: number,
         scaleFactor: number,
         mapImage: string,
+        locationSet: 'valleyBase' | 'legacyArcology'
     }
 
-    let { width, height, x, y, scaleFactor, mapImage }: Props = $props();
+    let { width, height, x, y, scaleFactor, mapImage, locationSet }: Props = $props();
 
 
     let svgElem = $state<SVGElement>();
@@ -180,7 +182,8 @@
             transform={`scale(${scaleFactor})`} 
         />
 
-        {#each locationData as location (location.name)}
+        {#each locationData.filter((l) => l.set == locationSet) as location (location.name)}
+
             {#if location.isPivotal}
                 <circle
                     r={Math.round(65 * scaleFactor)}
