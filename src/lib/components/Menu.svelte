@@ -1,33 +1,45 @@
 <script lang="ts">
-    import ValleyBanner from "$lib/assets/banner-lure.jpg";
-    import ArcologyBanner from "$lib/assets/banner-legacy.jpg";
-    import { getShowLocationNumbers, toggleLocationNumbers } from "$lib/options.svelte";
+    import {
+        getShowLocationNumbers,
+        toggleLocationNumbers,
+    } from "$lib/options.svelte";
 
     let showMenu = $state(true);
-
 </script>
 
 <div id="menu">
-    {#if showMenu} 
+    {#if showMenu}
         <h3>Map Select</h3>
         <div class="links">
-            <a href="/valley_map"><img src={ValleyBanner} alt="The Valley"/></a>
-            <a href="/arcology_map"><img src={ArcologyBanner} alt="The Arcology"/></a>
+            <a href="/valley_map"
+                ><img src="/banner-lure.jpg" alt="The Valley" /></a
+            >
+            <a href="/arcology_map"
+                ><img src="/banner-legacy.jpg" alt="The Arcology" /></a
+            >
         </div>
-
 
         <h3>Options</h3>
         <div class="options">
-            <button onclick={() => toggleLocationNumbers()}>{getShowLocationNumbers() ? 'Hide' : 'Show'} Location Numbers</button>
+            <button onclick={() => toggleLocationNumbers()}
+                >{getShowLocationNumbers() ? "Hide" : "Show"} Location Numbers</button
+            >
             <p>Under construction...</p>
         </div>
-        <button onclick={() => {showMenu = false}}>Hide</button>
+        <button
+            onclick={() => {
+                showMenu = false;
+            }}>Hide</button
+        >
     {:else}
         <!-- TODO: Create hamburger to re-open the menu -->
-        <button onclick={() => {showMenu = true}}>Show</button>
+        <button
+            onclick={() => {
+                showMenu = true;
+            }}>Show</button
+        >
     {/if}
 </div>
-
 
 <style>
     #menu {
@@ -48,7 +60,4 @@
         display: flex;
         flex-direction: column;
     }
-
-
-    
 </style>
